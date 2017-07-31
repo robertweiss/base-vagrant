@@ -41,6 +41,11 @@ echo "setlocale(LC_ALL,'de_DE.UTF-8');" >> $configfile
 
 #Get language pack
 git clone https://github.com/yellowled/pw-lang-de.git /var/www/langPackDe
+# Get Assets folder
+rm -rf /var/www/public/site/templates/*
+git clone https://github.com/robertweiss/base-tpl.git /var/www/public/site/templates
+# cd /var/www/public/site/templates/
+# npm install
 
 # Clean up folders
 rm -rf /var/www/temppw
