@@ -1,0 +1,11 @@
+{
+	"folders":
+	[
+		{
+			"name": "Base Templates",
+            "path": "./public/site/templates",
+            "folder_exclude_patterns": ["node_modules"],
+            "file_exclude_patterns": [".*", "admin.php", "npm-debug.log", "yarn.lock"]
+		}
+	]
+}

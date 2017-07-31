@@ -41,6 +41,8 @@ echo "setlocale(LC_ALL,'de_DE.UTF-8');" >> $configfile
 
 #Get language pack
 git clone https://github.com/yellowled/pw-lang-de.git /var/www/langPackDe
+rm /var/www/langPackDe/README.md
+
 # Get Assets folder
 rm -rf /var/www/public/site/templates/*
 git clone https://github.com/robertweiss/base-tpl.git /var/www/public/site/templates
@@ -51,4 +53,3 @@ git clone https://github.com/robertweiss/base-tpl.git /var/www/public/site/templ
 rm -rf /var/www/temppw
 rm /var/www/public/CONTRIBUTING.md /var/www/public/LICENSE.TXT /var/www/public/README.md
 rm -rf /var/www/public/site/modules/Helloworld /var/www/public/site/modules/README.txt
-rm -rf /var/www/public/site/templates/README.txt /var/www/public/site/templates/scripts /var/www/public/site/templates/styles /var/www/public/site/templates/errors
