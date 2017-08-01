@@ -13,9 +13,11 @@ Vagrant.configure("2") do |config|
 
     config.vm.synced_folder ".", "/var/www", :nfs => { :mount_options => ["dmode=777","fmode=666"] }
 
-    config.vm.provision "shell", :path => "install.sh", :keep_color=> true, :args=> [projectname, projectdomain]
+    config.vm.provision "shell", :path=> "install.sh", :keep_color=> true, :args=> [projectname, projectdomain]
 
-    config.vm.provision "file", :source => "~/ownCloud/Pro-Modules/", :destination => "/var/www/public/site/modules"
+    config.vm.provision "file", :source=> "~/ownCloud/Pro-Modules/", :destination=> "/var/www/public/site/modules"
+
+    config.vm.provision "shell", :path=> "postinstall.sh", :keep_color=> true
 
     config.trigger.before [:suspend, :halt, :destroy] do
         info "Dumping database"

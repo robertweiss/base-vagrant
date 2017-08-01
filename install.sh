@@ -7,10 +7,11 @@ configfile='/var/www/public/site/config.php'
 # Create public folder if not existing
 mkdir /var/www/public
 cd /var/www/public
+echo "cd /var/www/public" >> /home/vagrant/.bashrc
 
 # Get newest dev branch of Processwire and install
 username='robertweiss'
-userpass='Dingens1'
+userpass='password'
 useremail='post@robertweiss.de'
 git clone -b dev https://github.com/processwire/processwire.git /var/www/temppw
 $ws new /var/www/public/ --dbUser root --dbPass root --dbName pw --timezone Europe/Berlin --httpHosts $2 --adminUrl pw --username $username --userpass $userpass --useremail $useremail --profile blank --src /var/www/temppw
@@ -34,14 +35,14 @@ $ws t:f basic-page --fields body,imgs
 # Add settings to configfile
 echo "\$config->prependTemplateFile = '_init.php';" >> $configfile
 
-# Install german locale and add to config
+# Install german locale and add to config (will be installed in postinstall.sh)
 sudo locale-gen de_DE.UTF-8
 sudo update-locale
 echo "setlocale(LC_ALL,'de_DE.UTF-8');" >> $configfile
 
 #Get language pack
 git clone https://github.com/yellowled/pw-lang-de.git /var/www/langPackDe
-rm /var/www/langPackDe/README.md
+rm -rf /var/www/langPackDe/README.md /var/www/langPackDe/.gitignore /var/www/langPackDe/.git
 
 # Get Assets folder
 rm -rf /var/www/public/site/templates/*
