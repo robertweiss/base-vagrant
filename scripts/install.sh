@@ -7,14 +7,16 @@ configfile='/var/www/public/site/config.php'
 # Create public folder if not existing
 mkdir /var/www/public
 cd /var/www/public
-echo "cd /var/www/public" >> /home/vagrant/.bashrc
+
+# Create db
+sudo mysqladmin -uroot -proot create $2
 
 # Get newest dev branch of Processwire and install
 username='robertweiss'
 userpass='password'
 useremail='post@robertweiss.de'
 git clone -b dev https://github.com/processwire/processwire.git /var/www/temppw
-$ws new /var/www/public/ --dbUser root --dbPass root --dbName pw --timezone Europe/Berlin --httpHosts $2 --adminUrl pw --username $username --userpass $userpass --useremail $useremail --profile blank --src /var/www/temppw
+$ws new /var/www/public/ --dbUser root --dbPass root --dbName $2 --timezone Europe/Berlin --httpHosts $3 --adminUrl pw --username $username --userpass $userpass --useremail $useremail --profile blank --src /var/www/temppw
 
 # Switch on debugging
 $ws debug --on
@@ -34,6 +36,8 @@ $ws t:f basic-page --fields body,imgs
 
 # Add settings to configfile
 echo "\$config->prependTemplateFile = '_init.php';" >> $configfile
+echo "\$config->sessionExpireSeconds = 86400;" >> $configfile
+echo "\$config->pageNumUrlPrefix = 'seite';" >> $configfile
 
 # Install german locale and add to config (will be installed in postinstall.sh)
 sudo locale-gen de_DE.UTF-8
@@ -47,8 +51,6 @@ rm -rf /var/www/langPackDe/README.md /var/www/langPackDe/.gitignore /var/www/lan
 # Get Assets folder
 rm -rf /var/www/public/site/templates/*
 git clone https://github.com/robertweiss/base-tpl.git /var/www/public/site/templates
-# cd /var/www/public/site/templates/
-# npm install
 
 # Clean up folders
 rm -rf /var/www/temppw
