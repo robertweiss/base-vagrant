@@ -9,7 +9,6 @@ mv Base.sublime-project "$2.sublime-project"
 
 # Change Homepage param in package.json and siteTitle in _init.php
 sed -i "s/http:\/\/base.dev\//http:\/\/$3\//g" public/site/templates/package.json
-
 sed -i "s/\$siteTitle = '';/\$siteTitle = '$1';/g" public/site/templates/_init.php
 
 # Open Sublime Text and Chrome
