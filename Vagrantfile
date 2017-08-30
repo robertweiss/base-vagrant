@@ -1,5 +1,5 @@
 require 'yaml'
-settings = YAML.load_file('settings.yml')
+settings = YAML.load_file(File.dirname(__FILE__) + 'settings.yml')
 
 Vagrant.configure("2") do |config|
 
@@ -14,11 +14,11 @@ Vagrant.configure("2") do |config|
 
     config.vm.synced_folder ".", "/var/www", :nfs => { :mount_options => ["dmode=777","fmode=666"] }
 
-    config.vm.provision "shell", :path=> "scripts/install.sh", :keep_color=> true, :args=> [settings['title'], settings['name'], settings['domain']]
+    config.vm.provision "shell", :path=> "./scripts/install.sh", :keep_color=> true, :args=> [settings['title'], settings['name'], settings['domain']]
 
     config.vm.provision "file", :source=> "~/ownCloud/Pro-Modules/", :destination=> "/var/www/public/site/modules"
 
-    config.vm.provision "shell", :path=> "scripts/postinstall_client.sh", :keep_color=> true
+    config.vm.provision "shell", :path=> "./scripts/postinstall_client.sh", :keep_color=> true
 
     config.vm.provision "trigger" do |trigger|
         trigger.fire do
