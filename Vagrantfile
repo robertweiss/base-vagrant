@@ -1,5 +1,5 @@
 require 'yaml'
-settings = YAML.load_file(File.dirname(__FILE__) + 'settings.yml')
+settings = YAML.load_file(File.dirname(__FILE__) + '/settings.yml')
 
 Vagrant.configure("2") do |config|
 
