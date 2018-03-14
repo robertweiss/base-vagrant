@@ -5,5 +5,5 @@ sed -i "s/http:\/\/base.test\//http:\/\/$3\//g" public/site/templates/package.js
 sed -i "s/\$siteTitle = '';/\$siteTitle = '$1';/g" public/site/templates/_init.php
 
 # Open VS Code and Chrome
-code ./public/site/templates
+/usr/local/bin/code-insiders ./public/site/templates
 open http://$3/pw/access/users/edit/?id=41
