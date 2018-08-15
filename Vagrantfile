@@ -4,7 +4,7 @@ settings = YAML.load_file(File.dirname(__FILE__) + '/settings.yml')
 Vagrant.configure("2") do |config|
 
     config.vm.box = "robertweiss/pwbox"
-    config.vm.box_version = "1.1"
+    config.vm.box_version = "1.2.1"
     config.vm.provider "virtualbox"
 
     config.vm.hostname = settings['domain']
@@ -20,14 +20,12 @@ Vagrant.configure("2") do |config|
 
     config.vm.provision "shell", :path=> "./scripts/postinstall_client.sh", :keep_color=> true
 
-    config.vm.provision "trigger" do |trigger|
-        trigger.fire do
-            run "./scripts/postinstall_host.sh '" + settings['title'] + "' '" + settings['name'] + "' '" + settings['domain'] + "'"
-        end
+    config.vm.provision :host_shell do |host_shell|
+        host_shell.inline = "./scripts/postinstall_host.sh '" + settings['title'] + "' '" + settings['name'] + "' '" + settings['domain'] + "'"
     end
 
-    config.trigger.before [:suspend, :halt, :destroy] do
-        info "Dumping database"
-        run_remote "mysqldump -u root -proot " + settings['name'] + " > /var/www/" + settings['name'] + ".sql"
-      end
+    config.trigger.before [:suspend, :halt, :destroy] do |trigger|
+        trigger.info = "Dumping database"
+        trigger.run_remote = {inline: "mysqldump -u root -proot " + settings['name'] + " > /var/www/" + settings['name'] + ".sql"}
+    end
 end

@@ -38,10 +38,6 @@ $ws t:f basic-page --fields body,imgs
 echo "\$config->prependTemplateFile = '_init.php';" >> $configfile
 echo "\$config->sessionExpireSeconds = 86400;" >> $configfile
 echo "\$config->pageNumUrlPrefix = 'seite';" >> $configfile
-
-# Install german locale and add to config (will be installed in postinstall.sh)
-sudo locale-gen de_DE.UTF-8
-sudo update-locale
 echo "setlocale(LC_ALL,'de_DE.UTF-8');" >> $configfile
 
 #Get language pack
