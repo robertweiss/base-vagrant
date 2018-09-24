@@ -36,6 +36,8 @@ $ws t:f basic-page --fields body,imgs
 
 # Add settings to configfile
 echo "\$config->prependTemplateFile = '_init.php';" >> $configfile
+echo "\$config->urls->templates = \$config->urls->templates.'pages/';" >> $configfile
+echo "\$config->paths->templates = \$config->paths->templates.'pages/';" >> $configfile
 echo "\$config->sessionExpireSeconds = 86400;" >> $configfile
 echo "\$config->pageNumUrlPrefix = 'seite';" >> $configfile
 echo "setlocale(LC_ALL,'de_DE.UTF-8');" >> $configfile
