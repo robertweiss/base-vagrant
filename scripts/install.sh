@@ -43,7 +43,7 @@ echo "\$config->pageNumUrlPrefix = 'seite';" >> $configfile
 echo "setlocale(LC_ALL,'de_DE.UTF-8');" >> $configfile
 
 #Get language pack
-git clone https://github.com/yellowled/pw-lang-de.git /var/www/langPackDe
+git clone -b dev --single-branch https://github.com/jmartsch/pw-lang-de /var/www/langPackDe
 rm -rf /var/www/langPackDe/README.md /var/www/langPackDe/.gitignore /var/www/langPackDe/.git
 
 # Get Assets folder
