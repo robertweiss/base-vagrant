@@ -31,6 +31,41 @@ $steroids['PageListTweaks'] = str_replace('pListIDs', '', $steroids['PageListTwe
 $steroids['Tooltips'] = '[]';
 $modules->saveConfig('AdminOnSteroids', $steroids);
 
+$tracy = $modules->getConfig('TracyDebugger');
+$tracy['enabled'] = 1;
+$tracy['superuserForceDevelopment'] = 1;
+$tracy['maxDepth'] = 6;
+$tracy['maxLength'] = 2000;
+$tracy['editor'] = 'vscode-insiders://file/%file:%line';
+$tracy['localRootPath'] = $argv[1]; // hostWebrootPath
+$tracy['email'] = 'post@robertweiss.de';
+$tracy['processwireInfoPanelSections'] = [
+    "configData",
+    "versionsList",
+    "adminLinks",
+    "documentationLinks",
+    "gotoId",
+    "processWireWebsiteSearch"
+];
+$tracy['customPWInfoPanelLinks'] = [
+    "/processwire/setup/template/",
+    "/processwire/setup/field/",
+    "/processwire/setup/",
+    "/processwire/module/",
+    "/processwire/access/users/"
+]
+$tracy['pWInfoPanelLinksNewTab'] = 1;
+$tracy['dumpPanelTabs'] = [
+    "debugInfo",
+    "fullObject",
+    "iterator"
+];
+$tracy['styleAdminType'] = [
+    "default",
+    "favicon"
+];
+$modules->saveConfig('TracyDebugger', $tracy);
+
 $pagename = $modules->getConfig('InputfieldPageName');
 $pagename['replacements']['ä'] = 'ae';
 $pagename['replacements']['ö'] = 'oe';

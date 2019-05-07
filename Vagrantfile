@@ -4,7 +4,7 @@ settings = YAML.load_file(File.dirname(__FILE__) + '/settings.yml')
 Vagrant.configure("2") do |config|
 
     config.vm.box = "robertweiss/pwbox"
-    config.vm.box_version = "1.2.1"
+    config.vm.box_version = "1.2.2"
     config.vm.provider "virtualbox"
 
     config.vm.hostname = settings['domain']
@@ -22,7 +22,8 @@ Vagrant.configure("2") do |config|
 
     config.vm.provision "file", :source=> "~/ownCloud/Pro-Modules/", :destination=> "/var/www/public/site/modules"
 
-    config.vm.provision "shell", :path=> "./scripts/postinstall_client.sh", :keep_color=> true
+    hostWebrootPath = File.dirname(__FILE__) + '/public/'
+    config.vm.provision "shell", :path=> "./scripts/postinstall_client.sh", :keep_color=> true :args:[hostWebrootPath]
 
     config.vm.provision :host_shell do |host_shell|
         host_shell.inline = "./scripts/postinstall_host.sh '" + settings['title'] + "' '" + settings['name'] + "' '" + settings['domain'] + "'"
