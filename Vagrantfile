@@ -23,7 +23,7 @@ Vagrant.configure("2") do |config|
     config.vm.provision "file", :source=> "~/ownCloud/Pro-Modules/", :destination=> "/var/www/public/site/modules"
 
     hostWebrootPath = File.dirname(__FILE__) + '/public/'
-    config.vm.provision "shell", :path=> "./scripts/postinstall_client.sh", :keep_color=> true :args=> [hostWebrootPath]
+    config.vm.provision "shell", :path=> "./scripts/postinstall_client.sh", :keep_color=> true, :args=> [hostWebrootPath]
 
     config.vm.provision :host_shell do |host_shell|
         host_shell.inline = "./scripts/postinstall_host.sh '" + settings['title'] + "' '" + settings['name'] + "' '" + settings['domain'] + "'"
