@@ -53,7 +53,7 @@ $tracy['customPWInfoPanelLinks'] = [
     "/processwire/setup/",
     "/processwire/module/",
     "/processwire/access/users/"
-]
+];
 $tracy['pWInfoPanelLinksNewTab'] = 1;
 $tracy['dumpPanelTabs'] = [
     "debugInfo",
