@@ -4,6 +4,9 @@
 ws='/home/vagrant/.config/composer/vendor/bin/wireshell'
 configfile='/var/www/public/site/config.php'
 
+# # Silent wireshell warnings
+# sed -i "s|<?php|<?php error_reporting(E_ALL ^ E_WARNING)\;|g" /home/vagrant/.config/composer/vendor/wireshell/wireshell/app/wireshell.php
+
 # Create public folder if not existing
 mkdir /var/www/public
 cd /var/www/public
@@ -22,6 +25,7 @@ $ws new /var/www/public/ --dbUser root --dbPass root --dbName $2 --timezone Euro
 $ws debug --on
 
 # Install common modules
+$ws m:e AdminThemeUikit
 $ws m:e MarkupSimpleNavigation
 $ws m:e AdminOnSteroids
 $ws m:e TextformatterHannaCode
@@ -47,10 +51,14 @@ git clone -b dev --single-branch https://github.com/jmartsch/pw-lang-de /var/www
 rm -rf /var/www/langPackDe/README.md /var/www/langPackDe/.gitignore /var/www/langPackDe/.git
 
 # Get Assets folder
-rm -rf /var/www/public/site/templates/*
+rm -rf /var/www/public/site/templates
 git clone https://github.com/robertweiss/base-tpl.git /var/www/public/site/templates
 
 # Clean up folders
 rm -rf /var/www/temppw
 rm /var/www/public/CONTRIBUTING.md /var/www/public/LICENSE.TXT /var/www/public/README.md
 rm -rf /var/www/public/site/modules/Helloworld /var/www/public/site/modules/README.txt
+
+# Change Homepage param in package.json and siteTitle in _init.php
+sed -i "s/http:\/\/base.test\//http:\/\/$3\//g" /var/www/public/site/templates/package.json
+sed -i "s/\$siteTitle = '';/\$siteTitle = '$1';/g" /var/www/public/site/templates/pages/_init.php

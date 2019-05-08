@@ -1,6 +1,5 @@
-#!/usr/bin/php
 <?php
-include '/var/www/public/index.php';
+include('/var/www/public/index.php');
 
 // Install Language Support (superuser needed)
 $users->setCurrentUser($users->get('robertweiss'));
@@ -15,6 +14,12 @@ foreach ($files->find('/var/www/langPackDe') as $file) {
 $lang->save();
 $files->rmdir('/var/www/langPackDe', true);
 
+# Change admin theme to UIKit
+$admin = $users->get('robertweiss');
+$admin->of(false);
+$admin->admin_theme = 'AdminThemeUikit';
+$admin->save();
+
 // Install Pro Modules (can not be installed via Wireshell)
 $modules->install('FieldtypeRepeater');
 $modules->install('FieldtypeRepeaterMatrix');
@@ -24,7 +29,9 @@ $modules->install('ProcessWireAPI');
 $modules->refresh();
 
 // Module Settings
-$modules->saveConfig('AdminThemeDefault', 'colors', 'warm');
+$adminUiKit = $modules->getConfig('AdminThemeUikit');
+$adminUiKit['useAsLogin'] = 1;
+$modules->saveConfig('AdminThemeUikit', $adminUiKit);
 
 $steroids = $modules->getConfig('AdminOnSteroids');
 $steroids['PageListTweaks'] = str_replace('pListIDs', '', $steroids['PageListTweaks']);

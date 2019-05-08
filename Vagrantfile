@@ -13,8 +13,9 @@ Vagrant.configure("2") do |config|
         vb.name = settings['name']
     end
 
+    randomIPPart = rand(1..255);
     config.vm.network "forwarded_port", guest: 80, host: 8080
-    config.vm.network "private_network", ip: "192.168.33.10"
+    config.vm.network "private_network", ip: "192.168.33." + randomIPPart.to_s
 
     config.vm.synced_folder ".", "/var/www", :nfs => { :mount_options => ["dmode=777","fmode=666"] }
 
@@ -23,7 +24,7 @@ Vagrant.configure("2") do |config|
     config.vm.provision "file", :source=> "~/ownCloud/Pro-Modules/", :destination=> "/var/www/public/site/modules"
 
     hostWebrootPath = File.dirname(__FILE__) + '/public/'
-    config.vm.provision "shell", :path=> "./scripts/postinstall_client.sh", :keep_color=> true, :args=> [hostWebrootPath]
+    config.vm.provision "shell", :inline=> "php /var/www/scripts/postinstall_client.php " + hostWebrootPath
 
     config.vm.provision :host_shell do |host_shell|
         host_shell.inline = "./scripts/postinstall_host.sh '" + settings['title'] + "' '" + settings['name'] + "' '" + settings['domain'] + "'"
